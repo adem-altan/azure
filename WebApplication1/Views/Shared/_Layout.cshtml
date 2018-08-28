@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - WebApplication</title>
+    <link rel="stylesheet" href="~/Content/site.css"/>
+    <link rel="stylesheet" href="~/Content/bootstrap.css"/>
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Home", "Index", "Home", null, new {@class = "navbar-brand"})
+            @Html.ActionLink("New Customer", "CreateCustomer", "Home", null, new {@class = "navbar-brand"})
+        </div>
+        
+        <div class="navbar-nav">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">New Account<span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li class="nav-item">@Html.ActionLink("New Home Loan", "OpenHomeLoanAccount", "Home")</li>
+                <li class="nav-item">@Html.ActionLink("New Savings Account", "OpenSavingAccount", "Home")</li>
+            </ul>
+        </div>
+        <div class="navbar-nav">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Move Money<span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li class="nav-item">@Html.ActionLink("Deposit", "MakeDeposit", "Home")</li>
+                <li class="nav-item">@Html.ActionLink("Withdrawal", "Withdrawal", "Home")</li>
+                <li class="nav-item">@Html.ActionLink("Transfer Money", "Transfer", "Home")</li>
+            </ul>
+        </div>
+        <div class="navbar-nav">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Display
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li class="nav-item">@Html.ActionLink("List Accounts", "AccountLister", "Home")</li>
+                <li class="nav-item">@Html.ActionLink("Transaction Log", "AllTransactions", "Home")</li>
+                <li class="nav-item">@Html.ActionLink("Display Mini Statement", "MiniStatement", "Home")</li>
+                <li class="nav-item">@Html.ActionLink("Display Balance", "Balance", "Home")</li>
+            </ul>
+        </div>
+        <div class="navbar-nav">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Extras
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li class="nav-item">@Html.ActionLink("Calculate", "CalculateInterestToDate", "Home")</li>
+                <li class="nav-item">@Html.ActionLink("Close an Account", "CloseAccount", "Home")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container body-content">
+    @RenderBody()
+    <hr/>
+    <footer>
+        <p>&copy; 2018 - Readify Graduate Puzzle by Adem T ALTAN</p>
+    </footer>
+</div>
+
+<environment names="Development">
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/site.js"></script>
+</environment>
+
+@RenderSection("scripts", false)
+</body>
+</html>

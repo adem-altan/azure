@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Welcome to Bank Readify</h1>
+    <p class="lead">What would you like to do?</p>
+    <p class="alert-info">New Accounts</p>
+    <a href="@Url.Action("NewHomeLoan")" class="btn btn-primary btn-lg">New Home Loan &raquo;</a>
+    <a href="@Url.Action("NewSavingsAccount")" class="btn btn-primary btn-lg">New Savings Account &raquo;</a>
+    <hr/>
+    <p class="alert-info">Move Money</p>
+    <a href="@Url.Action("MakeDeposit")" class="btn btn-primary btn-lg">Deposit &raquo;</a>
+    <a href="@Url.Action("Withdrawal")" class="btn btn-primary btn-lg">Withdrawal &raquo;</a>
+    <a href="@Url.Action("Transfer")" class="btn btn-primary btn-lg">Transfer Money &raquo;</a>
+    <hr/>
+    <p class="alert-info">Display</p>
+    <a href="@Url.Action("AllTransactions")" class="btn btn-primary btn-lg">Transaction Log &raquo;</a>
+    <a href="@Url.Action("AccountLister")" class="btn btn-primary btn-lg">List Accounts &raquo;</a>
+    <a href="@Url.Action("MiniStatement")" class="btn btn-primary btn-lg">Mini Statements &raquo;</a>
+    <a href="@Url.Action("Balance")" class="btn btn-primary btn-lg">Display Balance &raquo;</a>
+    <hr/>
+    <p class="alert-info">Extras</p>
+    <a href="" class="btn btn-primary btn-lg">Calculate &raquo;</a>
+    <a href="" class="btn btn-primary btn-lg">Close an Account &raquo;</a>
+</div>
+
+<div class="row">
+    
+</div>

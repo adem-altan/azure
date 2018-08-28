@@ -1,0 +1,40 @@
+@using WebApplication1.Controllers
+
+
+@{
+    ViewBag.Title = "Deposit to an Account";
+    
+}
+
+<h2>Please Select an Account</h2>
+<form method="post" action="">
+    Select an Account from the List:<br>
+    <select name="accounts" id="accounts" onchange="myFunction()">
+        <option>Please select an account</option>
+        @foreach (string Accounts in ViewBag.Accounts)
+        {
+            <option>@Accounts</option>
+        }
+    </select>
+    <br>   
+    Funds Available:<br>
+    <input id="fund" type="text"/><br/>    
+</form>
+<script >
+    function myFunction() {
+        var accNo = document.getElementById('accounts').value;
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetAvailableFunds", "Home")',
+            dataType: 'html',
+            data: ({
+                //insert your parameters to pass to controller                
+                accNo: accNo   
+            }),
+            success: function(data) {                
+                document.getElementById('fund').value = data;
+            }
+        });               
+    }
+   
+</script>

@@ -1,0 +1,31 @@
+
+@{
+    ViewBag.Title = "List of Accounts";
+    
+}
+
+<h2>List of Accounts in the Database</h2>
+<table border="1" cellpadding="5">
+    <thead>
+    <tr>
+        @foreach (System.Data.DataColumn col in Model.Columns)
+        {
+            <th style="padding: 10px; margin: 10px;">@col.Caption</th>
+        }
+    </tr>
+    </thead>
+    <tbody>
+    @foreach(System.Data.DataRow row in Model.Rows)
+    {
+        <tr>
+            @foreach (var cell in row.ItemArray)
+            {               
+                <td style="padding: 10px; margin: 10px;">@cell.ToString()</td>                                  
+            }
+        </tr>
+    }      
+    </tbody>
+</table>
+
+<a> @Html.ActionLink("Click Here to Return the Main Page", "Index", "Home")</a>
+

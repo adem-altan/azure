@@ -1,0 +1,22 @@
+@using WebApplication1.Controllers
+
+
+@{
+    ViewBag.Title = "Open a New Home Loan";
+    
+}
+
+<h2>Open a New Home Loan Account for a Selected Customer</h2>
+<form method="post" action="@Url.Action("OpenSavingAccount")">
+    Select a Customer from the List:<br>
+    <select name="customerName">
+        @foreach (string Customers in ViewBag.CustomerList)
+        {
+            <option>@Customers</option>  
+        }
+    </select>
+    @{DateTimeOffset openedDate = DateTimeOffset.Now;}
+    <input name="openedDate" value="@openedDate" hidden="true"/>
+    <input type="submit" value="Submit">
+    
+</form>

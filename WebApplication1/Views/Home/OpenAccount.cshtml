@@ -1,0 +1,34 @@
+﻿@using WebApplication1.Controllers
+
+
+@{
+    ViewBag.Title = "Open a New Account";
+    
+}
+
+<h2>Open a New Account for a Selected Customer</h2>
+<form method="post" action="">
+    Select a Customer from the List:<br>
+    <select name="customerName">
+        @foreach (string Customers in ViewBag.CustomerList)
+        {
+            <option>@Customers</option>  
+        }
+    </select>
+    <br>
+    Your Password:<br>
+    <input type="text" name="password" value="1234">
+    <br>
+    Select an Account Type from the List:<br>
+    <select>
+        @foreach (string Types in ViewBag.AccountTypes)
+        {
+            <option>@Types</option>  
+        }
+    </select>
+    <br>
+    Enter a Deposit Amount:<br> 
+    <input type="text" name="amount" />
+    <br>
+    <input type="submit" value="Submit">
+</form>

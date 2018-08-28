@@ -1,0 +1,75 @@
+@using WebApplication1.Controllers
+
+
+@{
+    ViewBag.Title = "Deposit to an Account";
+    
+}
+
+<h2>Deposit to a Selected Account</h2>
+<form method="post" action="">
+    Select an Account from the List:<br>
+    <select name="accounts" id="accounts" onchange="myFunction()">
+        <option>Please select an account</option>
+        @foreach (string Accounts in ViewBag.Accounts)
+        {
+            <option>@Accounts</option>
+        }
+    </select>
+    <br>   
+    Funds Available:<br>
+    <input id="fund" type="text"/><br/>
+    Enter Description:<br> 
+    <input type="text" id="description" name="description" />
+    <br>
+    Enter a Deposit Amount:<br> 
+    <input type="text" id="depositAmount" name="depositAmount" />
+    <br>    
+    <button onclick="makeDeposit()">Submit</button>    
+</form>
+<script >
+    function myFunction() {
+        var accNo = document.getElementById('accounts').value;
+        //var asd = @Url.Action("accNoGenerator", "Home", new { code = "sad", number = "69" });
+        
+        
+        var personId="someId";
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetAvailableFunds", "Home")',
+            dataType: 'html',
+            data: ({
+                //insert your parameters to pass to controller
+                id: personId, 
+                accNo: accNo   
+            }),
+            success: function(data) {
+                personId = data;
+                //alert("Successfully posted!");
+                document.getElementById('fund').value = personId;
+            }
+        });               
+    }
+    function makeDeposit()
+    {
+        var accNo = document.getElementById('accounts').value;
+        var depositAmount = parseFloat(document.getElementById('depositAmount').value);
+        var description = document.getElementById('description').value;
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Depositer", "Home")',
+            dataType: 'html',
+            data: ({
+                //insert your parameters to pass to controller               
+                accNo: accNo,
+                depositAmount: depositAmount,
+                description: description
+            }),
+            success: function(data) {              
+                alert("Deposit has been made!");           
+                
+            }
+        }); 
+       
+    }
+</script>

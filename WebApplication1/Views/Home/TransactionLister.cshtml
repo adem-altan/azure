@@ -1,0 +1,31 @@
+
+@{
+    ViewBag.Title = "List of Transactions";
+    
+}
+
+<h2>List of Transactions in the Database</h2>
+<table border="2px" cellpadding="15">
+    <thead>
+    <tr style="padding: 0; margin: 0;">
+        @foreach (System.Data.DataColumn col in Model.Columns)
+        {
+            <th style="padding: 10px; margin: 10px;">@col.Caption</th>
+        }
+    </tr>
+    </thead>
+    <tbody>
+    @foreach(System.Data.DataRow row in Model.Rows)
+    {
+        <tr style="padding: 10px; margin: 10px;">
+            @foreach (var cell in row.ItemArray)
+            {               
+                <td style="padding: 10px; margin: 10px;">@cell.ToString()</td>                                 
+            }
+        </tr>
+    }      
+    </tbody>
+</table>
+
+<a> @Html.ActionLink("Click Here to Return the Main Page", "Index", "Home")</a>
+

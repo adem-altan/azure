@@ -1,0 +1,82 @@
+@using WebApplication1.Controllers
+
+
+@{
+    ViewBag.Title = "Withdraw from an Account";
+    
+}
+
+<h2>Withdraw from the Selected Account</h2>
+<h3>Only Saving Accounts are Listed!</h3>
+
+<form method="post" action="">
+    Select an Account from the List:<br>
+    <select name="accounts" id="accounts" onchange="myFunction()">
+        <option>Please select an account</option>
+        @foreach (string Accounts in ViewBag.Accounts)
+        {
+            <option>@Accounts</option>
+        }
+    </select>
+    <br>   
+    Funds Available:<br>
+    <input id="fund" type="text"/><br/>
+    Enter Description:<br> 
+    <input type="text" id="description" name="description" />
+    <br>
+    Enter a Deposit Amount:<br> 
+    <input type="text" id="withdrawAmount" name="withdrawAmount" />
+    <br>  
+    <button onclick="makeWithdraw()">Submit</button>    
+</form>
+<script >
+    function myFunction() {
+        var accNo = document.getElementById('accounts').value;
+        //var asd = @Url.Action("accNoGenerator", "Home", new { code = "sad", number = "69" });
+        
+        
+        var personId="someId";
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetAvailableFunds", "Home")',
+            dataType: 'html',
+            data: ({
+                //insert your parameters to pass to controller
+                id: personId, 
+                accNo: accNo   
+            }),
+            success: function(data) {
+                personId = data;
+                //alert("Successfully posted!");
+                document.getElementById('fund').value = personId;
+            }
+        });               
+    }
+    function makeWithdraw()
+    {
+        var accNo = document.getElementById('accounts').value;
+        var withdrawAmount = parseFloat(document.getElementById('withdrawAmount').value);
+        var availableAmount = parseFloat(document.getElementById('fund').value);
+        var description = document.getElementById('description').value;
+        if (withdrawAmount > availableAmount ) {
+            alert("Insufficient amount has been entered!");
+            return ;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("MakeWithdraw", "Home")',
+            dataType: 'html',
+            data: ({
+                //insert your parameters to pass to controller               
+                accNo: accNo,
+                withdrawAmount: withdrawAmount,
+                description: description
+            }),
+            success: function(data) {              
+                alert("Amount has been withdrawn from the account!");           
+                
+            }
+        }); 
+       
+    }
+</script>

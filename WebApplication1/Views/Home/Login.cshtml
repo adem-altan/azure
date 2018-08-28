@@ -1,0 +1,21 @@
+﻿
+
+@{
+    ViewBag.Title = "Login Page";
+    
+}
+
+<h2>Please Enter Your Customer Name</h2>
+@using(Html.BeginForm("PerformLogin", "Home"))
+{
+    <input type="text" name="username" value="readify">
+    <br>
+    <input type="text" name="password" value="1234">
+    <br>
+    <br><br>
+    <input type="submit" value="Submit">
+}
+
+<h2>Don't Have an Account Yet?</h2>
+<a> @Html.ActionLink("Click Here to Register", "CreateCustomer", "Home")</a>
+

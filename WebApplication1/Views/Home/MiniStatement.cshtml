@@ -1,0 +1,25 @@
+
+@{
+    ViewBag.Title = "List of 5 Most Recent Transaction of an Account";
+    
+}
+
+
+Select an Account from the List:<br>
+@using (Html.BeginForm("TransactionLister", "Home"))
+{
+    <select name="account" id="account">
+        <option>Please select an account</option>
+        @foreach (string Accounts in ViewBag.Accounts)
+        {
+            <option>@Accounts</option>
+        }
+    </select>
+    <br>
+    <button>Submit</button> 
+}
+
+
+
+<a> @Html.ActionLink("Click Here to Return the Main Page", "Index", "Home")</a>
+

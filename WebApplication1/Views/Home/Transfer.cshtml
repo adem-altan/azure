@@ -1,0 +1,93 @@
+@using WebApplication1.Controllers
+
+
+@{
+    ViewBag.Title = "Transfer FROM an Account TO an Account";
+    
+}
+
+<h2>Withdraw from the Selected Account</h2>
+<h3>You can only transfer from SAVING Accounts!</h3>
+<form method="post" action="">
+    FROM:<br>
+    <select name="accounts" id="fromAccounts" onchange="myFunction()">
+        <option>Please select an account</option>
+        @foreach (string From in ViewBag.From)
+        {
+            <option>@From</option>
+        }
+    </select>
+    <br>   
+    Available Funds:<br>
+    <input id="fund" type="text"/><br/>
+    Enter Description:<br> 
+    <input type="text" id="description" name="description" />
+    <br>
+    Enter a Transfer Amount:<br> 
+    <input type="text" id="transferAmount" name="transferAmount" />
+    <br>  
+    TO:<br>
+    <select name="toAccounts" id="toAccounts">
+        <option>Please select an account</option>
+        @foreach (string To in ViewBag.To)
+        {
+            <option>@To</option>
+        }
+    </select>
+    <br>   
+    <button onclick="transfer()">Submit</button> 
+</form>
+
+<script >
+    function myFunction() {
+        var accNo = document.getElementById('fromAccounts').value;
+        var availableFunds;
+        
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetAvailableFunds", "Home")',
+            dataType: 'html',
+            data: ({
+                //insert your parameters to pass to controller                
+                accNo: accNo   
+            }),
+            success: function(data) {
+                availableFunds = data;                
+                document.getElementById('fund').value = availableFunds;
+            }
+        });               
+    }
+    function transfer()
+    {
+        var fromAccount = document.getElementById('fromAccounts').value;
+        var toAccount = document.getElementById('toAccounts').value;
+        var transferAmount = parseFloat(document.getElementById('transferAmount').value);
+        var available = parseFloat(document.getElementById('fund').value);
+        var description = document.getElementById('description').value;        
+        if (available < transferAmount) {
+            alert("You have insufficient funds to perform this transfer!");
+            return ;
+        }
+        if (fromAccount == toAccount ) {
+            alert("Selected accounts cannot be the same!");
+            return ;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("MakeTransfer", "Home")',
+            dataType: 'html',
+            data: ({
+                //insert your parameters to pass to controller               
+                from: fromAccount,
+                to: toAccount,
+                transferAmount: transferAmount,
+                description: description
+            }),
+            success: function(data) {              
+                alert("Amount has been transferred from the account!");           
+                
+            }
+        }); 
+       
+    }
+</script>
