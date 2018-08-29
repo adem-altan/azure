@@ -3,6 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="a5ee8a8b-35d3-4358-b654-1be888381fec" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApplication1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApplication1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/bin/WebApplication1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/bin/WebApplication1.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/bin/WebApplication1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/bin/WebApplication1.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/obj/Debug/WebApplication1.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/obj/Debug/WebApplication1.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/obj/Debug/WebApplication1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/obj/Debug/WebApplication1.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/obj/Debug/WebApplication1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/obj/Debug/WebApplication1.pdb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -397,7 +402,7 @@
             <entry file="file://$PROJECT_DIR$/WebApplication1/Interfaces/IReadifyBank.cs">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="621">
-                  <caret line="78" column="18" lean-forward="true" selection-start-line="78" selection-end-line="79" />
+                  <caret line="78" selection-start-line="78" selection-end-line="79" />
                   <folding>
                     <marker date="1534756579911" expanded="true" signature="6:47" ph="..." />
                     <marker date="1534756579911" expanded="true" signature="84:4026" ph="{...}" />
@@ -685,7 +690,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="133367000" />
+    <option name="totallyTimeSpent" value="133676000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1450,7 +1455,7 @@
     <entry file="file://$PROJECT_DIR$/WebApplication1/Interfaces/IReadifyBank.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="621">
-          <caret line="78" column="18" lean-forward="true" selection-start-line="78" selection-end-line="79" />
+          <caret line="78" selection-start-line="78" selection-end-line="79" />
           <folding>
             <marker date="1534756579911" expanded="true" signature="6:47" ph="..." />
             <marker date="1534756579911" expanded="true" signature="84:4026" ph="{...}" />
