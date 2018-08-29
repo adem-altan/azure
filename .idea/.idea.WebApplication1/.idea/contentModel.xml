@@ -28,7 +28,6 @@
         </e>
         <e p="Controllers" t="Include">
           <e p="HomeController.cs" t="Include" />
-          <e p="ReadifyBankController.cs" t="Include" />
         </e>
         <e p="favicon.ico" t="Include" />
         <e p="fonts" t="Include">
@@ -64,11 +63,11 @@
         <e p="Views" t="Include">
           <e p="_ViewStart.cshtml" t="Include" />
           <e p="Home" t="Include">
-            <e p="About.cshtml" t="Include" />
             <e p="AccountLister.cshtml" t="Include" />
             <e p="AllTransactions.cshtml" t="Include" />
             <e p="Balance.cshtml" t="Include" />
-            <e p="Contact.cshtml" t="Include" />
+            <e p="Calculate.cshtml" t="Include" />
+            <e p="Close.cshtml" t="Include" />
             <e p="CreateCustomer.cshtml" t="Include" />
             <e p="Index.cshtml" t="Include" />
             <e p="ListCustomers.cshtml" t="Include" />

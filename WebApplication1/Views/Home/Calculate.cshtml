@@ -1,0 +1,117 @@
+@using WebApplication1.Controllers
+
+
+@{
+    ViewBag.Title = "Calculate Interest to a Selected for the Selected Account";
+    
+}
+
+<h2>Please Select an Account</h2>
+<form method="post" action="">
+    Select an Account from the List:<br>
+    <select name="accounts" id="accounts" onchange="myFunction()">
+        <option>Please select an account</option>
+        @foreach (string Accounts in ViewBag.Accounts)
+        {
+            <option>@Accounts</option>
+        }
+    </select>
+    <br>   
+    Funds Available:<br>
+    <input id="fund" type="text"/><br/>    
+    Set TO Date Below:<br>
+    <input id="datefield" type='date' min='1899-01-01' max='2000-13-13'></input>
+    <br>
+    <input type="button" value="Submit" onclick="calculator()">
+    <br>
+    Term (Number of Days):
+    <br>
+    <input id="term" type='text'</input>
+    <br>
+    Interest Rate:
+    <br>
+    <input id="rate" type='text'</input>
+    <br>
+    Total Interest to be Paid:   
+    <br>
+    <input id="interest" type='text'></input>
+    <br>
+</form>
+
+<a> @Html.ActionLink("Click Here to Return the Main Page", "Index", "Home")</a>
+
+<script >
+    //Credit to Shrinivas Pai from StackoverFlow to set minimum date
+    //The below code was taken from question 32378590 and modified.
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("datefield").setAttribute("min", today);
+
+
+    function myFunction() {
+        var accNo = document.getElementById('accounts').value;
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetAvailableFunds", "Home")',
+            dataType: 'html',
+            data: ({
+                //insert your parameters to pass to controller                
+                accNo: accNo   
+            }),
+            success: function(data) {                
+                document.getElementById('fund').value = data;
+            }
+        });               
+    }
+
+    function calculator() {
+        var accNo = document.getElementById('accounts').value;
+        var currAmount = document.getElementById('fund').value;
+        var toDate = document.getElementById('datefield').value;
+        var numberOfDays = (Date.parse(toDate) - Date.parse(today)) /  (1000 * 60 * 60 * 24);
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetInterestRate", "Home")',
+            dataType: 'html',
+            data: ({
+                //insert your parameters to pass to controller                
+                accNo: accNo,
+                toDate: toDate
+            }),
+            success: function(data) {                
+                document.getElementById('rate').value = data;
+                document.getElementById('term').value = numberOfDays;
+                interestCalculator(accNo, numberOfDays, currAmount);
+            }
+        });
+        
+    }
+    function interestCalculator(account, numberOfDays, currAmount) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CalculateInterest", "Home")',
+            dataType: 'html',
+            data: ({
+                //insert your parameters to pass to controller                
+                account: account,
+                numberOfDays: numberOfDays,
+                amount: currAmount
+    }),
+            success: function(data) {                
+                document.getElementById('interest').value = data;
+                
+            }
+        });
+    }
+
+</script>

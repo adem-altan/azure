@@ -176,11 +176,11 @@
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Scripts\site.js" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\AccountLister.cshtml" />
     <Content Include="Views\Home\AllTransactions.cshtml" />
     <Content Include="Views\Home\Balance.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Calculate.cshtml" />
+    <Content Include="Views\Home\Close.cshtml" />
     <Content Include="Views\Home\CreateCustomer.cshtml" />
     <Content Include="Views\Home\MakeDeposit.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />

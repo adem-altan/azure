@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -161,7 +162,6 @@ namespace WebApplication1.Controllers
                 da.Fill(dt);          
                 string amount = dt.Rows[0].ItemArray[0].ToString();
                 return amount;
-
             }
             catch (Exception e)
             {
@@ -587,21 +587,7 @@ namespace WebApplication1.Controllers
                 DateTime parsedDate = DateTime.Parse(dateOpened);
                 string customerName = dt.Rows[0].ItemArray[3].ToString();
                 decimal balance = decimal.Parse(dt.Rows[0].ItemArray[2].ToString());
-                decimal targetBalance = balance + depositAmount;
-                
-                //now create an account depending on account type
-                //since there is no setter for account, not sure how I can perform deposit
-                //hence just calling the function for now
-                if (accNo[0] == 'L')
-                {
-                    IAccount account = new HomeLoanAccount();
-                    PerformDeposit(account, depositAmount, description, DateTimeOffset.Now);
-                }
-                else
-                {
-                    IAccount account = new SavingsAccount();
-                    PerformDeposit(account, depositAmount, description, DateTimeOffset.Now);
-                }
+                decimal targetBalance = balance + depositAmount;             
                 dt.Clear();
                 
                 //now update account balance in the database
@@ -641,21 +627,7 @@ namespace WebApplication1.Controllers
                 DateTime parsedDate = DateTime.Parse(dateOpened);
                 string customerName = dt.Rows[0].ItemArray[3].ToString();
                 decimal balance = decimal.Parse(dt.Rows[0].ItemArray[2].ToString());
-                decimal targetBalance = balance - withdrawAmount;
-                
-                //now create an account depending on account type
-                //since there is no setter for account, not sure how I can perform deposit
-                //hence just calling the function for now
-                if (accNo[0] == 'L')
-                {
-                    IAccount account = new HomeLoanAccount();
-                    PerformDeposit(account, withdrawAmount, description, DateTimeOffset.Now);
-                }
-                else
-                {
-                    IAccount account = new SavingsAccount();
-                    PerformDeposit(account, withdrawAmount, description, DateTimeOffset.Now);
-                }
+                decimal targetBalance = balance - withdrawAmount;    
                 dt.Clear();
                 
                 //now update account balance in the database
@@ -726,19 +698,99 @@ namespace WebApplication1.Controllers
                 throw;
             }        
         }
-        
-        public DataTable GetMiniStatement(string accNo)      
-        {
-                                                   
+
+        public ActionResult Calculate()
+        {                     
+            List<string> accounts = new List<string>();
+
             try
             {
-                DataTable dt = new DataTable();                
+                DataTable dt = new DataTable();
+                SQLiteConnection conn = new SQLiteConnection(this.source);
+                conn.Open();
+                String accountQuery = "select accountNumber from account";
+                SQLiteDataAdapter sda = new SQLiteDataAdapter(accountQuery, conn);
+                sda.Fill(dt);
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    foreach (var item in dataRow.ItemArray)
+                    {
+                        accounts.Add((string)item);
+                    }
+                }
+          
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            ViewBag.Accounts = accounts;
+
+            return View();
+        }
+
+        //This function returns the interest rate of an account type
+        public string GetInterestRate(string accNo)
+        {
+            try
+            {
+                string typeName;
+                typeName = accNo[0] == 'L' ?  "homeLoan" : "savings";
+                DataTable dt = new DataTable();           
                 SQLiteConnection conn = new SQLiteConnection(source);
                 conn.Open();                
-                String accountQuery = "select * from transactions ORDER BY date ASC;";               
+                String accountQuery = "select rate, term from accountType where name = '"+typeName+"'";               
+                SQLiteDataAdapter da = new SQLiteDataAdapter(accountQuery, conn);               
+                da.Fill(dt);          
+                string rate = dt.Rows[0].ItemArray[0].ToString();
+                string term = dt.Rows[0].ItemArray[1].ToString();
+                return rate +"% "+ term;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+        }
+        
+        //This function calculates the interest amount for certain number of days
+        //Interest rates are stored in the database
+        //User enters the number of days from the view
+        public decimal CalculateInterest(string account, int numberofDays, decimal amount)
+        {   
+            //Function GetInterestRate will return rate as a string for the given account number
+            //We need to split the string and store into an array
+            //First element in the array gives us the rate
+            string[] rater = GetInterestRate(account).Split('%');
+            double rate = Double.Parse(rater[0]);
+            //Home loan rate is annual
+            rate = rater[1] == " monthly" ? (rate/100) : ((rate / 100)/12);   
+            //Calculate interest by multiplying initial amount by the rate times number of days
+            //Monthly rate is divided by number of days in a month
+            decimal total = (decimal)rate/30 * amount * numberofDays;
+            return total;
+        }
+        
+        public decimal CalculateInterestToDate(IAccount account, DateTimeOffset toDate)
+        {
+         
+            decimal interest = 3.66m;
+            return interest;
+        }
+        public ActionResult Close()      
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                
+                SQLiteConnection conn = new SQLiteConnection(source);
+                conn.Open();                
+                String accountQuery = "select * from account ORDER BY customerName ASC;";               
                 SQLiteDataAdapter da = new SQLiteDataAdapter(accountQuery, conn);               
                 da.Fill(dt);               
-                return dt;
+                return View(dt);
             }
             catch (Exception e)
             {
@@ -747,5 +799,23 @@ namespace WebApplication1.Controllers
             }
                  
         }
+        public void Closer(string accNo)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                SQLiteConnection conn = new SQLiteConnection(source);
+                conn.Open();
+                String accountQuery = "delete from account where accountNumber = '" + accNo + "'";
+                SQLiteDataAdapter da = new SQLiteDataAdapter(accountQuery, conn);
+                da.Fill(dt);
+                dt.Clear();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
     }
 }
