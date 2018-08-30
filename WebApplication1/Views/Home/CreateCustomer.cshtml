@@ -5,9 +5,9 @@
 <h2>Create New Customer</h2>
 @using (Html.BeginForm("NewCustomer", "Home", new AjaxOptions { HttpMethod = "POST", OnSuccess = "submitSuccess()" }))
 {
-    <input type="text" name="username">
+    <input type="text" name="username" placeholder="Your Name">
     <br>
-    <input type="text" name="password">
+    <input type="text" name="password" placeholder="Your Password">
     <br>
     <br><br>
     <input type="submit" value="Submit">

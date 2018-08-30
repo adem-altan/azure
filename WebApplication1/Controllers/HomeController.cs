@@ -38,7 +38,7 @@ namespace WebApplication1.Controllers
         public string Description { get; }
         
     }
-    public class HomeController : Controller//, IReadifyBank
+    public class HomeController : Controller, IReadifyBank
     {
         //This is the database path which needs to be hardcoded initially
         private string source = "Data Source = /Applications/Rider 2018.1.4.app/Contents/bin/identifier.sqlite";
@@ -815,6 +815,44 @@ namespace WebApplication1.Controllers
             {
                 Console.WriteLine(e);
             }
+        }
+
+        public IAccount OpenSavingsAccount(string customerName, DateTimeOffset openDate)
+        {
+            IAccount savingAccount = new SavingsAccount();
+            return savingAccount;
+        }
+
+
+        public decimal GetBalance(IAccount account)
+        {
+            account = new HomeLoanAccount();
+            decimal bal = account.Balance;
+            return bal;
+        }
+        
+        public IEnumerable<IStatementRow> GetMiniStatement(IAccount account)
+        {
+            IEnumerable<IStatementRow> accounts = new List<IStatementRow>();                      
+            return accounts;
+        }
+
+        public IEnumerable<IStatementRow> CloseAccount(IAccount account, DateTimeOffset closeDate)
+        {
+            IEnumerable<IStatementRow> accounts = new List<IStatementRow>();
+            account = new SavingsAccount();
+            closeDate = DateTimeOffset.Now;
+            return accounts;
+        }
+
+        public void PerformWithdrawal(IAccount account, decimal amount, string description, DateTimeOffset withdrawalDate)
+        {
+            
+        }
+        
+        public void PerformTransfer(IAccount from, IAccount to, decimal amount, string description, DateTimeOffset transferDate)
+        {
+            
         }
 
     }
